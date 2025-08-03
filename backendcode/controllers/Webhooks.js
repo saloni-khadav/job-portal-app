@@ -88,27 +88,15 @@ export const clerkWebhooks = async (req, res) => {
     //   });
     // }
 
-//     if (type === 'user.created') {
-//   const email = data.email_addresses?.[0]?.email_address || 'no-email@example.com';
-
-//   await user.create({
-//     _id: data.id,
-//     name: `${data.first_name} ${data.last_name}`,
-//     email,
-//     image: data.image_url,
-//     resume: ''
-//   });
-// }
-if (type === 'user.created') {
-  // Check if email exists, else fallback to null or empty string
-  const email = (data.email_addresses && data.email_addresses.length > 0)
-    ? data.email_addresses[0].email_address
-    : null; // or 'no-email@example.com' or ''
-
-  await user.create({
+    if (type === 'user.created') {
+  // const email = data.email_addresses?.[0]?.email_address || 'no-email@example.com';
+const primaryEmail =
+    evt.data.email_addresses?.[0]?.email_address ?? null;
+  
+    await user.create({
     _id: data.id,
     name: `${data.first_name} ${data.last_name}`,
-    email: email,
+    email:primaryEmail,
     image: data.image_url,
     resume: ''
   });
