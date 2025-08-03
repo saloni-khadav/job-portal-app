@@ -82,7 +82,7 @@ export const clerkWebhooks = async (req, res) => {
       await user.create({
         _id: data.id,
         name: `${data.first_name} ${data.last_name}`,
-        email: data.email_addresses[0].email_address,
+        email: data.email_addresses[0].email_address ||"no-email@example.com",
         image: data.image_url,
         resume: ''
       });
