@@ -78,15 +78,28 @@ export const clerkWebhooks = async (req, res) => {
     console.log('Webhook Type:', type);  
     console.log('Webhook Data:', data);  
 
+    // if (type === 'user.created') {
+    //   await user.create({
+    //     _id: data.id,
+    //     name: `${data.first_name} ${data.last_name}`,
+    //     email: data.email_addresses[0].email_address ||"no-email@example.com",
+    //     image: data.image_url,
+    //     resume: ''
+    //   });
+    // }
+
     if (type === 'user.created') {
-      await user.create({
-        _id: data.id,
-        name: `${data.first_name} ${data.last_name}`,
-        email: data.email_addresses[0].email_address ||"no-email@example.com",
-        image: data.image_url,
-        resume: ''
-      });
-    }
+  const email = data.email_addresses?.[0]?.email_address || 'no-email@example.com';
+
+  await user.create({
+    _id: data.id,
+    name: `${data.first_name} ${data.last_name}`,
+    email,
+    image: data.image_url,
+    resume: ''
+  });
+}
+
 
     res.json({ received: true });
   } catch (err) {
