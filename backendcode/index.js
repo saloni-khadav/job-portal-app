@@ -42,8 +42,9 @@ dotenv.config();
 
 const app = express();
 
+app.set('case sensitive routing', false);
 
-app.post('/Webhooks', clerkWebhooks);
+app.post('/webhooks', clerkWebhooks);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -60,6 +61,10 @@ app.listen(PORT, () => {
   connectDB();
   console.log(`Server running at port ${PORT}`);
 });
+
+
+
+
 
 app.get("/users", async (req, res) => {
   const users = await user.find();
